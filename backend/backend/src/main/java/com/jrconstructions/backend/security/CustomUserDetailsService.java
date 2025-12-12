@@ -1,12 +1,12 @@
 package com.jrconstructions.backend.security;
 
-import com.jrconstructions.backend.User;
-import com.jrconstructions.backend.UserRepository;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import com.jrconstructions.backend.entity.User;
+import com.jrconstructions.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import java.util.Collections;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -22,12 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        String role = "ROLE_" + user.getRole().toUpperCase();
-
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                java.util.List.of(new SimpleGrantedAuthority(role))
+                Collections.singletonList(new org.springframework.security.core.authority.SimpleGrantedAuthority(user.getRole()))
         );
     }
 }

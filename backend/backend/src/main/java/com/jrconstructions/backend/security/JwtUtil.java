@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class JwtUtil {
@@ -22,6 +23,9 @@ public class JwtUtil {
     private long expirationMs;
 
     private Key getSigningKey() {
+        if (!StringUtils.hasText(secret)) {
+            throw new IllegalStateException("JWT secret must be provided via configuration");
+        }
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
