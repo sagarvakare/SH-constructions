@@ -9,7 +9,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/contact', formData);
+      await axios.post('/api/contact', formData);
       setStatus('Message sent! We will contact you soon.');
       setFormData({ name: '', email: '', message: '' }); // Clear form
     } catch (error) {

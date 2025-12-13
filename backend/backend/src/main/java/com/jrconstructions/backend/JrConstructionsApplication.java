@@ -19,6 +19,7 @@ public class JrConstructionsApplication {
             System.setProperty("DB_USERNAME", dotenv.get("DB_USERNAME"));
             System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
             System.setProperty("JWT_SECRET", dotenv.get("JWT_SECRET"));
+            System.setProperty("DB_URL", dotenv.get("DB_URL"));
         } catch (Exception e) {
             System.out.println("Warning: .env file not found. Assuming variables are set in environment.");
         }

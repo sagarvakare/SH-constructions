@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // Connect to the Backend API
-      const response = await axios.post('http://localhost:8080/auth/login', {
+      const response = await axios.post('/auth/login', {
         username,
         password
       });
