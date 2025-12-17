@@ -1,74 +1,67 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import "../Auth.css"; // <--- Import the CSS here
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Connect to the Backend API
-      axios.post("https://jr-constructions-clone.onrender.com/auth/login", {
-        username,
-        password
-      });
+      const response = await axios.post(
+        "https://jr-constructions-clone.onrender.com/auth/login", 
+        { username, password }
+      );
+      
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", username);
+      navigate("/dashboard"); 
 
-      // Save the "Key" (Token) the backend gave us
-      localStorage.setItem('token', response.data.token);
-      
-      // Go to the Admin Dashboard (we will build this next)
-      navigate('/admin/dashboard');
-      
-    } catch (err) {
-      setError('Invalid Credentials. Try admin / admin123');
-      console.error("Login Failed:", err);
+    } catch (error) {
+      alert("Invalid Credentials");
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">Admin Login</h2>
-        
-        {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
-        
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
+    <div className="auth-container">
+      <div className="auth-box">
+        <h2 className="auth-title">Welcome Back</h2>
+        <form onSubmit={handleLogin}>
+          
+          <div className="input-group">
+            <label>Username</label>
             <input 
               type="text" 
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+              required 
             />
           </div>
-          
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+
+          <div className="input-group">
+            <label>Password</label>
             <input 
               type="password" 
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
             />
           </div>
-          
-          <button 
-            type="submit" 
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-200"
-          >
-            Login
-          </button>
+
+          <button type="submit" className="auth-btn">Sign In</button>
         </form>
-        <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+
+        <p className="auth-link">
+          New here? <Link to="/register">Create an Account</Link>
+        </p>
       </div>
     </div>
   );
-};
+}
 
 export default Login;
