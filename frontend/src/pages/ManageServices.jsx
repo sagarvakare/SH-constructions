@@ -18,7 +18,7 @@ const ManageServices = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/services');
+      const response = await axios.get('https://jr-constructions-clone.onrender.com/api/services');
       setServices(response.data);
     } catch (error) {
       console.error("Error fetching services", error);
@@ -28,7 +28,7 @@ const ManageServices = () => {
   const handleDelete = async (id) => {
     if(!window.confirm("Delete this service?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/services/${id}`, getAuthHeader());
+      await axios.delete(`https://jr-constructions-clone.onrender.com/api/services/${id}`, getAuthHeader());
       fetchServices();
     } catch (error) {
       alert('Failed to delete service.');
@@ -38,7 +38,7 @@ const ManageServices = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/api/services', newService, getAuthHeader());
+      await axios.post('https://jr-constructions-clone.onrender.com/api/services', newService, getAuthHeader());
       alert('Service Added!');
       setNewService({ title: '', description: '', iconUrl: '' });
       fetchServices();

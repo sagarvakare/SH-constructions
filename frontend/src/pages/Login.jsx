@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // Connect to the Backend API
-      const response = await axios.post('/auth/login', {
+      axios.post("https://jr-constructions-clone.onrender.com/auth/login", {
         username,
         password
       });

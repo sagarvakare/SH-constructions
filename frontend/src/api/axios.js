@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // This automatically chooses the right URL:
-// - If running on Laptop: uses http://localhost:8080
+// - If running on Laptop: uses https://jr-constructions-clone.onrender.com
 // - If running on Cloud: uses the real Cloud URL
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080',
+    baseURL: import.meta.env.VITE_API_URL || 'https://jr-constructions-clone.onrender.com',
     headers: { 'Content-Type': 'application/json' }
 });
 
