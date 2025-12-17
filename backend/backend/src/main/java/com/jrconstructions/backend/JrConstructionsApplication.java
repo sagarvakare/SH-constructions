@@ -1,13 +1,15 @@
 package com.jrconstructions.backend;
 
-import com.jrconstructions.backend.entity.User;
-import com.jrconstructions.backend.repository.UserRepository;
-import io.github.cdimascio.dotenv.Dotenv; // <--- This import is crucial!
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication; // <--- This import is crucial!
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.jrconstructions.backend.entity.User;
+import com.jrconstructions.backend.repository.UserRepository;
+
+import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication
 public class JrConstructionsApplication {
@@ -44,3 +46,6 @@ public class JrConstructionsApplication {
         };
     }
 }
+
+//register
+//login
