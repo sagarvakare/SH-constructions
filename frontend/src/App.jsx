@@ -3,6 +3,7 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Services from './pages/Services';
 import Login from './pages/Login';
+import Register from "./pages/Register";
 import ManageServices from './pages/ManageServices';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
@@ -17,6 +18,7 @@ function App() {
         {/* Admin Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/admin/services" element={<ManageServices />} />
 <Route path="/services" element={<Services />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
