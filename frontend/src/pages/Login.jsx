@@ -8,8 +8,7 @@ function Login({ onLogin }) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // SENIOR LEVEL: Function to decode JWT Token manually
-  // This ensures we get the role even if the backend response doesn't explicitly state it.
+  // Helper: Decode JWT Token manually
   const parseJwt = (token) => {
     try {
       return JSON.parse(atob(token.split('.')[1]));
@@ -29,43 +28,35 @@ function Login({ onLogin }) {
         formData
       );
 
-      // 1. Get Token and Role from response
+      // 1. Get Token
       const token = response.data.token || response.data;
+      
+      // 2. Find Role (Check response, then Token)
       let role = response.data.role;
       
-      // 2. If role not in response, try to decode from JWT token
       if (!role && token) {
         const decoded = parseJwt(token);
-        role = decoded?.role || decoded?.roles; // Check for 'role' or 'roles' claim
+        role = decoded?.role || decoded?.roles; 
       }
 
-      // 3. Fallback if role still not found
+      // 3. Fallback if role is missing (Assume User)
       if (!role) {
-        // Remove "ROLE_" prefix if present
-        const decoded = parseJwt(token);
-        if (decoded && decoded.role) {
-          role = decoded.role.replace(/^ROLE_/, '');
-        } else {
-          // Last resort fallback
-          role = formData.username.toLowerCase() === 'admin' ? 'ADMIN' : 'USER';
-        }
-      } else {
-        // Remove "ROLE_" prefix if present in the role from response
-        role = role.replace(/^ROLE_/, '');
+         role = formData.username.toLowerCase().includes('admin') ? 'ADMIN' : 'USER';
       }
 
-      // 4. Normalize Role (Always Uppercase)
-      const finalRole = role.toString().toUpperCase();
+      // 4. Normalize Role (Remove "ROLE_" prefix and uppercase)
+      const finalRole = role.toString().replace(/^ROLE_/, '').toUpperCase();
 
-      console.log("Login Success:", { username: formData.username, role: finalRole }); // Debug log
+      console.log("Login Success:", { username: formData.username, role: finalRole });
 
-      // 4. Send to App.jsx
+      // 5. Success
       onLogin(formData.username, token, finalRole);
 
     } catch (err) {
       console.error("Login Error:", err);
-      const errorMessage = err.response?.data?.message || err.response?.data || err.message || "Login failed. Please check username/password.";
-      setError(typeof errorMessage === 'string' ? errorMessage : "Login failed. Please check username/password.");
+      // Smart Error Message
+      const msg = err.response?.data?.message || "Login failed. Server might be restarting (Wait 1 min).";
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
@@ -76,7 +67,7 @@ function Login({ onLogin }) {
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border-t-4 border-jr-blue">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Secure Login</h2>
         
-        {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm font-bold">{error}</div>}
+        {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm font-bold text-center">{error}</div>}
         
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
