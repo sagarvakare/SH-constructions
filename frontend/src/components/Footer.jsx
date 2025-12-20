@@ -10,7 +10,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2 text-2xl font-bold mb-6">
             <FaHardHat className="text-jr-orange" />
-            <span>JR <span className="text-jr-orange">Constructions</span></span>
+            <span>SH <span className="text-jr-orange">Constructions</span></span>
           </div>
           <p className="text-gray-400 leading-relaxed">
             Building legacies since 2014. We are committed to delivering excellence in every brick we lay.
@@ -59,7 +59,7 @@ export default function Footer() {
 
       {/* Copyright Bar */}
       <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} JR Constructions & Solutions. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} SH Constructions & Solutions. All Rights Reserved.</p>
       </div>
     </footer>
   );

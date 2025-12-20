@@ -45,7 +45,7 @@ export default function Navbar({ user, onLogout }) {
         {/* Logo */}
         <div onClick={() => scrollToSection('hero')} className="flex items-center gap-2 cursor-pointer select-none">
           <FaHardHat className="text-jr-orange text-3xl" />
-          <span className="text-2xl font-extrabold text-jr-blue">JR <span className="text-jr-orange">Constructions</span></span>
+          <span className="text-2xl font-extrabold text-jr-blue">SH <span className="text-jr-orange">Constructions</span></span>
         </div>
 
         {/* Desktop Menu */}
