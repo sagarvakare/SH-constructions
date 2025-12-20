@@ -21,8 +21,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            // 1. Tell Security to use our CORS config
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            // 2. Disable CSRF (Critical for React Login)
             .csrf(csrf -> csrf.disable())
+            // 3. Allow access to Auth endpoints
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()
@@ -35,11 +38,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // WILDCARD FIX: Allows any origin (including Render & Localhost)
+        // --- THE "NUCLEAR" FIX ---
+        // We use setAllowedOriginPatterns("*") instead of specific URLs.
+        // This forces Spring to accept requests from localhost OR Render.
         configuration.setAllowedOriginPatterns(List.of("*")); 
         
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
