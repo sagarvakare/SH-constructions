@@ -1,11 +1,8 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-// Components
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";         // <--- Import Footer
-import ScrollToTop from "./components/ScrollToTop"; // <--- Import Scroll Button
 import ModernHome from "./pages/ModernHome";
+import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
@@ -14,18 +11,28 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Restore session
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("user");
+    const role = localStorage.getItem("role");
     if (token && username) {
-      setUser({ name: username, isAdmin: true });
+      setUser({ name: username, role: role });
     }
   }, []);
 
-  const handleLogin = (username, token) => {
+  const handleLogin = (username, token, role) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", username);
-    setUser({ name: username, isAdmin: true });
-    navigate("/");
+    localStorage.setItem("role", role);
+    
+    setUser({ name: username, role: role });
+
+    // ROUTING LOGIC
+    if (role === 'ADMIN') {
+      navigate("/admin-dashboard");
+    } else {
+      navigate("/");
+    }
   };
 
   const handleLogout = () => {
@@ -35,19 +42,27 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen font-sans text-gray-800 flex flex-col">
-      <Navbar user={user} onLogout={handleLogout} />
-      
-      <div className="flex-grow">
-        <Routes>
-          <Route path="/" element={<ModernHome user={user} />} />
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </div>
+    <div className="min-h-screen bg-gray-50 font-sans">
+      {/* Hide Navbar on Admin Dashboard for full-screen feel, show on others */}
+      {user?.role !== 'ADMIN' && <Navbar user={user} onLogout={handleLogout} />}
 
-      <ScrollToTop /> {/* <--- Add the Magic Button */}
-      <Footer />      {/* <--- Add the Professional Footer */}
+      <Routes>
+        {/* PUBLIC HOME */}
+        <Route path="/" element={<ModernHome />} />
+        
+        {/* ADMIN DASHBOARD (Protected) */}
+        <Route path="/admin-dashboard" element={
+          user?.role === 'ADMIN' ? (
+            <AdminDashboard onLogout={handleLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        } />
+
+        {/* AUTH */}
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </div>
   );
 }
