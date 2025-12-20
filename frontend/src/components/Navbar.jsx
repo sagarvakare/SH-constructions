@@ -8,18 +8,16 @@ export default function Navbar({ user, onLogout }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Glassmorphism Scroll Effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Senior Logic: Handles Navigation from ANY page
   const scrollToSection = (id) => {
-    setIsOpen(false); // Close mobile menu
+    setIsOpen(false);
     if (location.pathname !== "/") {
-      navigate("/"); // Go Home first
+      navigate("/");
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -42,10 +40,20 @@ export default function Navbar({ user, onLogout }) {
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-lg py-3' : 'bg-white/90 backdrop-blur-md py-4'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         
-        {/* Logo */}
-        <div onClick={() => scrollToSection('hero')} className="flex items-center gap-2 cursor-pointer select-none">
-          <FaHardHat className="text-jr-orange text-3xl" />
-          <span className="text-2xl font-extrabold text-jr-blue">SH <span className="text-jr-orange">Constructions</span></span>
+        {/* --- BRANDING / LOGO SECTION --- */}
+        <div onClick={() => scrollToSection('hero')} className="flex items-center gap-3 cursor-pointer select-none">
+          {/* Try to load logo.png, otherwise show Icon */}
+          <img 
+            src="/logo.png" 
+            alt="S H Logo" 
+            className="h-12 w-auto object-contain" 
+            onError={(e) => {e.target.style.display='none'; document.getElementById('fallback-icon').style.display='block'}}
+          />
+          <FaHardHat id="fallback-icon" className="text-jr-orange text-3xl hidden" />
+          
+          <span className="text-2xl font-extrabold text-jr-blue">
+            S H <span className="text-jr-orange">Construction</span>
+          </span>
         </div>
 
         {/* Desktop Menu */}
@@ -78,7 +86,7 @@ export default function Navbar({ user, onLogout }) {
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t p-6 flex flex-col gap-6 shadow-2xl absolute w-full left-0">
           {navItems.map((item) => (

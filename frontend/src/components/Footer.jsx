@@ -10,10 +10,10 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2 text-2xl font-bold mb-6">
             <FaHardHat className="text-jr-orange" />
-            <span>SH <span className="text-jr-orange">Constructions</span></span>
+            <span>S H <span className="text-jr-orange">Construction</span></span>
           </div>
           <p className="text-gray-400 leading-relaxed">
-            Building legacies since 2014. We are committed to delivering excellence in every brick we lay.
+            Building legacies. We are committed to delivering excellence in every brick we lay.
           </p>
         </div>
 
@@ -43,10 +43,9 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Newsletter / Social */}
+        {/* Social */}
         <div>
           <h4 className="text-xl font-bold mb-6 border-b-2 border-jr-orange inline-block pb-2">Connect With Us</h4>
-          <p className="text-gray-400 mb-6">Stay updated with our latest projects.</p>
           <div className="flex gap-4">
             {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, i) => (
               <a key={i} href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-jr-orange hover:text-white transition-all transform hover:scale-110">
@@ -59,7 +58,7 @@ export default function Footer() {
 
       {/* Copyright Bar */}
       <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} SH Constructions & Solutions. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} S H Construction. All Rights Reserved.</p>
       </div>
     </footer>
   );
