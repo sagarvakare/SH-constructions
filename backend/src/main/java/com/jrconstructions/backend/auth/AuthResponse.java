@@ -1,4 +1,4 @@
 package com.jrconstructions.backend.auth;
 
-public record AuthResponse(String token) {
+public record AuthResponse(String token, String role) {
 }

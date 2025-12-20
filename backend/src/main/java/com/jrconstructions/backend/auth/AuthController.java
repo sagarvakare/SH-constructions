@@ -63,9 +63,19 @@ public class AuthController {
             UserDetails userDetails = userDetailsService.loadUserByUsername(request.username());
             String token = jwtUtil.generateToken(userDetails);
             
-            // Return Token AND Role (so frontend knows if it's Admin or User)
-            // Note: You might need to update AuthResponse to hold role, or just map it here.
-            return ResponseEntity.ok(new AuthResponse(token)); 
+            // Extract role from user details
+            String role = userDetails.getAuthorities().stream()
+                    .map(auth -> auth.getAuthority())
+                    .findFirst()
+                    .orElse("USER");
+            
+            // Remove "ROLE_" prefix if present (Spring Security sometimes adds it)
+            if (role.startsWith("ROLE_")) {
+                role = role.substring(5);
+            }
+            
+            // Return Token AND Role
+            return ResponseEntity.ok(new AuthResponse(token, role)); 
             
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
