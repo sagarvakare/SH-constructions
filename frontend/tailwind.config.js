@@ -2,10 +2,20 @@
 export default {
   content: [
     "./index.html",
-    "./**/*.{js,ts,jsx,tsx}",  // <--- CHANGED: Looks in ALL subfolders, not just src
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        // These are the EXACT colors from jrconstructionsandsolutions.com
+        'jr-blue': '#0c2b64', 
+        'jr-orange': '#f15a22',
+        'jr-light': '#f8f9fa',
+      },
+      fontFamily: {
+        sans: ['Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+      }
+    },
   },
   plugins: [],
 }

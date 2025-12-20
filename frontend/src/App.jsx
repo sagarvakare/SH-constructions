@@ -1,30 +1,57 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Contact from './pages/Contact';
-import About from './pages/About';
-import Services from './pages/Services';
-import Login from './pages/Login';
+// src/App.jsx
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+// Components
+import Navbar from "./components/Navbar";
+import ModernHome from "./pages/ModernHome";
+import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ManageServices from './pages/ManageServices';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // 1. Check Login Status on Load
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("user");
+    if (token && username) {
+      setUser({ name: username, isAdmin: true }); 
+    }
+  }, []);
+
+  // 2. Login Function (Passed to Login Page)
+  const handleLogin = (username, token) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", username);
+    setUser({ name: username, isAdmin: true });
+    navigate("/"); // Redirect to Home instantly
+  };
+
+  // 3. Logout Function (Passed to Navbar)
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/login");
+  };
+
   return (
-    <Router>
+    <div className="bg-gray-50 min-h-screen">
+      {/* Navbar stays on top */}
+      <Navbar user={user} onLogout={handleLogout} />
+      
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ModernHome user={user} />} />
         
-        {/* Admin Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/about" element={<About />} />
+        {/* Pass handleLogin so the app knows when we sign in */}
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        
         <Route path="/register" element={<Register />} />
-        <Route path="/admin/services" element={<ManageServices />} />
-<Route path="/services" element={<Services />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/contact" element={<Contact />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 
