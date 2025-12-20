@@ -11,23 +11,26 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Restore session
+    // 1. Restore session on refresh
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("user");
-    const role = localStorage.getItem("role");
+    const role = localStorage.getItem("role"); // Read stored role
+
     if (token && username) {
       setUser({ name: username, role: role });
     }
   }, []);
 
   const handleLogin = (username, token, role) => {
+    // 2. Save Session
     localStorage.setItem("token", token);
     localStorage.setItem("user", username);
     localStorage.setItem("role", role);
     
+    // 3. Update State
     setUser({ name: username, role: role });
 
-    // ROUTING LOGIC
+    // 4. Redirect based on Role (The Critical Fix)
     if (role === 'ADMIN') {
       navigate("/admin-dashboard");
     } else {
@@ -42,20 +45,21 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-      {/* Hide Navbar on Admin Dashboard for full-screen feel, show on others */}
+    <div className="bg-gray-50 min-h-screen font-sans">
+      {/* Show Navbar ONLY if NOT Admin Dashboard */}
       {user?.role !== 'ADMIN' && <Navbar user={user} onLogout={handleLogout} />}
 
       <Routes>
-        {/* PUBLIC HOME */}
+        {/* PUBLIC HOME - If Admin tries to go here, send them to dashboard? Optional. */}
         <Route path="/" element={<ModernHome />} />
         
-        {/* ADMIN DASHBOARD (Protected) */}
+        {/* PROTECTED ADMIN ROUTE */}
         <Route path="/admin-dashboard" element={
           user?.role === 'ADMIN' ? (
             <AdminDashboard onLogout={handleLogout} />
           ) : (
-            <Navigate to="/login" />
+            // If not admin, kick them to login
+            <Navigate to="/login" replace />
           )
         } />
 
