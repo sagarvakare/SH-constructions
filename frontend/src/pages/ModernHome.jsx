@@ -49,13 +49,36 @@ export default function ModernHome() {
         {isAdminMode ? "Exit Admin Mode" : "Enable Admin Mode"}
       </button>
 
-      {/* Stack the Components */}
-      <Hero />
-      <Services services={services} setServices={setServices} isAdminMode={isAdminMode} />
-      <Projects projects={projects} setProjects={setProjects} isAdminMode={isAdminMode} />
-      <Team team={team} setTeam={setTeam} isAdminMode={isAdminMode} />
-      <Testimonials testimonials={initialTestimonials} />
-      <Contact />
+      {/* --- SECTIONS WITH IDs FOR NAVIGATION --- */}
+      {/* Navbar looks for id="hero" */}
+      <div id="hero">
+        <Hero />
+      </div>
+
+      {/* Navbar looks for id="services" */}
+      <div id="services">
+        <Services services={services} setServices={setServices} isAdminMode={isAdminMode} />
+      </div>
+
+      {/* Navbar looks for id="projects" */}
+      <div id="projects">
+        <Projects projects={projects} setProjects={setProjects} isAdminMode={isAdminMode} />
+      </div>
+
+      {/* Navbar looks for id="team" */}
+      <div id="team">
+        <Team team={team} setTeam={setTeam} isAdminMode={isAdminMode} />
+      </div>
+
+      {/* Testimonials (Optional ID) */}
+      <div id="testimonials">
+        <Testimonials testimonials={initialTestimonials} />
+      </div>
+
+      {/* Navbar looks for id="contact" */}
+      <div id="contact">
+        <Contact />
+      </div>
 
       <footer className="bg-gray-900 text-gray-400 py-8 text-center border-t border-gray-800">
         <p>&copy; 2024 JR Constructions & Solutions.</p>
