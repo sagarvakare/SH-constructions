@@ -1,5 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
+// REMOVE: import axios from "axios";
+// ADD:
+import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login({ onLogin }) {
@@ -23,10 +25,8 @@ function Login({ onLogin }) {
     setError("");
 
     try {
-      const response = await axios.post(
-        "https://jr-constructions-backend.onrender.com/auth/login",
-        formData
-      );
+      const response = await api.post("/auth/login", formData);
+      
 
       // 1. Get Token
       const token = response.data.token || response.data;
