@@ -4,7 +4,7 @@ import axios from 'axios';
 // - If running on Laptop: uses https://jr-constructions-clone.onrender.com
 // - If running on Cloud: uses the real Cloud URL
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://jr-constructions-clone.onrender.com',
+    baseURL: import.meta.env.VITE_API_URL || 'https://jr-constructions-clone.onrender.com/',
     headers: { 'Content-Type': 'application/json' }
 });
 
