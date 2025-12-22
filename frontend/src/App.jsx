@@ -46,8 +46,8 @@ function App() {
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
-      {/* Show Navbar ONLY if NOT Admin Dashboard */}
-      {user?.role !== 'ADMIN' && <Navbar user={user} onLogout={handleLogout} />}
+     
+      <Navbar user={user} onLogout={handleLogout} />
 
       <Routes>
         {/* PUBLIC HOME - If Admin tries to go here, send them to dashboard? Optional. */}

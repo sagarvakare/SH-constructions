@@ -1,21 +1,34 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api"; // ✅ We import 'api', not 'axios'
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const [formData, setFormData] = useState({ username: "", password: "", role: "USER" });
+  const [loading, setLoading] = useState(false); // Added loading state
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true); // Disable button while loading
+
     try {
-      // Send role explicitly to backend
-      await axios.post("https://jr-constructions-backend.onrender.com/auth/register", formData);
-      alert(`Registration Successful! You can now login as ${formData.role}.`);
+      // ✅ FIX: Use 'api.post' instead of 'axios.post'
+      // ✅ FIX: Remove the full URL (api.js handles it)
+      await api.post("/auth/register", formData);
+      
+      alert(`Registration Successful! Please login.`);
       navigate("/login");
+
     } catch (err) {
-      console.error(err);
-      alert("Registration failed. Try a different username.");
+      console.error("Registration Error:", err);
+      
+      // ✅ BETTER ERROR HANDLING:
+      // This will show the REAL error from the backend (e.g., "Username taken")
+      // instead of just guessing.
+      const errorMessage = err.response?.data?.message || err.message || "Registration failed.";
+      alert(`Error: ${errorMessage}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,18 +57,22 @@ function Register() {
             <select 
               onChange={e => setFormData({...formData, role: e.target.value})} 
               className="w-full p-3 border rounded bg-white"
+              value={formData.role}
             >
               <option value="USER">User (Standard)</option>
               <option value="ADMIN">Admin (Manager)</option>
             </select>
           </div>
 
-          <button className="w-full bg-jr-blue text-white py-3 rounded font-bold hover:bg-blue-800 transition">
-            Register
+          <button 
+            disabled={loading}
+            className={`w-full py-3 rounded font-bold text-white transition ${loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-800'}`}
+          >
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
         <p className="mt-4 text-center text-sm">
-           Already have an account? <Link to="/login" className="text-jr-orange font-bold">Login</Link>
+           Already have an account? <Link to="/login" className="text-orange-500 font-bold">Login</Link>
         </p>
       </div>
     </div>
