@@ -8,6 +8,7 @@ import Projects from '../components/Projects';
 import Team from '../components/Team';
 import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
+import Footer from '../components/Footer'; // ✅ ADDED THIS IMPORT
 
 // --- MOCK DATA ---
 const initialServices = [
@@ -80,9 +81,9 @@ export default function ModernHome() {
         <Contact />
       </div>
 
-      <footer className="bg-gray-900 text-gray-400 py-8 text-center border-t border-gray-800">
-        <p>&copy; 2024 JR Constructions & Solutions.</p>
-      </footer>
+      {/* ✅ REPLACED OLD FOOTER WITH NEW COMPONENT */}
+      <Footer />
+      
     </div>
   );
 }

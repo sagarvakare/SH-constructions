@@ -41,13 +41,14 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* COLUMN 3: LIVE MAP */}
+        {/* COLUMN 3: LIVE MAP (FIXED) */}
         <div>
           <h4 className="text-xl font-bold mb-6 border-b-2 border-orange-500 inline-block pb-2">Our Location</h4>
           <div className="rounded-lg overflow-hidden border border-gray-700 h-48 w-full">
+            {/* ✅ FIXED: Uses a real Google Maps Embed URL for Rajajinagar */}
             <iframe 
               title="Office Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.804975765984!2d77.5539!3d12.9845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU5JzA0LjIiTiA3N8KwMzMnMTQuMCJF!5e0!3m2!1sen!2sin!4v1634567890123!5m2!1sen!2sin" 
+              src="https://maps.google.com/maps?q=14th+Main+Road,+Subramanya+Nagar,+Rajajinagar,+Bangalore&t=&z=13&ie=UTF8&iwloc=&output=embed"
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
@@ -93,7 +94,7 @@ export default function Footer() {
 
       {/* COPYRIGHT BAR */}
       <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-6">
-        <p>&copy; {new Date().getFullYear()} S H Constructions & Solutions. All Rights Reserved.</p>
+        <p>© {new Date().getFullYear()} S H Constructions & Solutions. All Rights Reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
           <a href="#" className="hover:text-white transition">Privacy Policy</a>
           <a href="#" className="hover:text-white transition">Terms of Service</a>
