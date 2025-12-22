@@ -1,9 +1,9 @@
-package com.jrconstructions.backend.auth;
+package com.SH construction.backend.auth;
 
-import com.jrconstructions.backend.entity.User;
-import com.jrconstructions.backend.repository.UserRepository;
-import com.jrconstructions.backend.security.CustomUserDetailsService;
-import com.jrconstructions.backend.security.JwtUtil;
+import com.SH construction.backend.entity.User;
+import com.SH construction.backend.repository.UserRepository;
+import com.SH construction.backend.security.CustomUserDetailsService;
+import com.SH construction.backend.security.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

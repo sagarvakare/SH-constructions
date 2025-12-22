@@ -1,6 +1,6 @@
-package com.jrconstructions.backend.repository;
+package com.SH construction.backend.repository;
 
-import com.jrconstructions.backend.entity.ContactMessage;
+import com.SH construction.backend.entity.ContactMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ContactRepository extends JpaRepository<ContactMessage, Long> {

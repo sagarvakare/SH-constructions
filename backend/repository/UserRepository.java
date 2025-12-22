@@ -1,4 +1,4 @@
-package com.jrconstructions.backend.repository;
+package com.SH construction.backend.repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

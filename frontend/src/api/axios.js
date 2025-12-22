@@ -3,10 +3,15 @@ import axios from 'axios';
 // This automatically chooses the right URL:
 // - If running on Laptop: uses https://jr-constructions-clone.onrender.com
 // - If running on Cloud: uses the real Cloud URL
+import axios from 'axios';
+
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://jr-constructions-clone.onrender.com/',
+    // REPLACE THIS WITH YOUR NEW 'SH' URL
+    baseURL: 'https://sh-constructions-backend.onrender.com', 
     headers: { 'Content-Type': 'application/json' }
 });
+
+// ... rest of the code
 
 // Automatically attach the Login Token (if it exists)
 api.interceptors.request.use(

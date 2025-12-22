@@ -1,4 +1,4 @@
-package com.jrconstructions.backend.auth;
+package com.SH construction.backend.auth;
 
 public record LoginRequest(String username, String password) {
 }

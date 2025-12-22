@@ -1,6 +1,6 @@
-package com.jrconstructions.backend.repository;
+package com.SH construction.backend.repository;
 
-import com.jrconstructions.backend.entity.Project;
+import com.SH construction.backend.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {

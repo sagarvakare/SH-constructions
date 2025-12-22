@@ -1,7 +1,7 @@
-package com.jrconstructions.backend.controller;
+package com.SH construction.backend.controller;
 
-import com.jrconstructions.backend.entity.Service;
-import com.jrconstructions.backend.repository.ServiceRepository;
+import com.SH construction.backend.entity.Service;
+import com.SH construction.backend.repository.ServiceRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

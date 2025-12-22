@@ -1,122 +1,166 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaHammer, FaProjectDiagram, FaUsers, FaEnvelope, FaSignOutAlt, FaPlus, FaTrash } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import api from "../api"; // ✅ Use the centralized API helper
+import { useNavigate } from "react-router-dom";
+import { FaTrash, FaPlus, FaSignOutAlt, FaHammer } from "react-icons/fa";
 
-export default function AdminDashboard({ onLogout }) {
-  const [activeTab, setActiveTab] = useState('inbox');
-  const [messages, setMessages] = useState([]);
-  const [stats, setStats] = useState({ services: 3, projects: 3, team: 3 });
-  
-  // Simulation Data (In real app, fetch from Backend)
-  const [content, setContent] = useState({
-    services: [
-      { id: 1, title: "Structure Works" },
-      { id: 2, title: "Turnkey Projects" },
-    ],
-    projects: [
-      { id: 1, title: "Pratham Heights" },
-      { id: 2, title: "Westside Complex" },
-    ]
+const AdminDashboard = ({ onLogout }) => {
+  const [services, setServices] = useState([]);
+  const [newService, setNewService] = useState({
+    title: "",
+    description: "",
+    icon: "FaHammer" // Default icon string
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  // Load Messages from "Database" (LocalStorage)
+  // 1. Fetch Services on Load
   useEffect(() => {
-    const savedMessages = JSON.parse(localStorage.getItem('contactMessages')) || [];
-    setMessages(savedMessages);
+    fetchServices();
   }, []);
 
-  const handleDeleteMessage = (index) => {
-    const updated = messages.filter((_, i) => i !== index);
-    setMessages(updated);
-    localStorage.setItem('contactMessages', JSON.stringify(updated));
-  };
-
-  const handleAddItem = (type) => {
-    const name = prompt(`Enter new ${type} name:`);
-    if (name) {
-      const newItem = { id: Date.now(), title: name };
-      setContent(prev => ({ ...prev, [type]: [...prev[type], newItem] }));
+  const fetchServices = async () => {
+    try {
+      const response = await api.get("/services");
+      setServices(response.data);
+    } catch (err) {
+      console.error("Failed to fetch services", err);
+      // If 403/401, token might be expired
+      if (err.response && (err.response.status === 403 || err.response.status === 401)) {
+          alert("Session expired. Please login again.");
+          onLogout();
+      }
     }
   };
 
-  const handleDeleteItem = (type, id) => {
-    if(window.confirm("Delete this item?")) {
-      setContent(prev => ({ ...prev, [type]: prev[type].filter(i => i.id !== id) }));
+  // 2. Handle Add Service
+  const handleAddService = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      // ✅ POST request using api.js (Token is auto-attached)
+      const response = await api.post("/services", newService);
+      
+      // Update UI instantly
+      setServices([...services, response.data]);
+      setNewService({ title: "", description: "", icon: "FaHammer" }); // Reset form
+      alert("Service Added Successfully!");
+    } catch (err) {
+      console.error("Add Service Error:", err);
+      setError("Failed to add service. Ensure backend is running.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 3. Handle Delete Service
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this service?")) return;
+
+    try {
+      await api.delete(`/services/${id}`);
+      setServices(services.filter((s) => s.id !== id));
+    } catch (err) {
+      console.error("Delete Error:", err);
+      alert("Failed to delete service.");
     }
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 font-sans">
-      
-      {/* SIDEBAR */}
-      <aside className="w-64 bg-jr-blue text-white flex flex-col">
-        <div className="p-6 text-2xl font-bold border-b border-blue-800">
-          Admin<span className="text-jr-orange">Panel</span>
+    <div className="min-h-screen bg-gray-100 font-sans">
+      {/* HEADER */}
+      <div className="bg-gray-900 text-white p-6 flex justify-between items-center shadow-md">
+        <h1 className="text-2xl font-bold flex items-center gap-3">
+          <FaHammer className="text-orange-500" /> Admin Dashboard
+        </h1>
+        <div className="flex gap-4">
+            <button onClick={() => navigate("/")} className="text-gray-300 hover:text-white transition">
+                Go to Home
+            </button>
+            <button 
+            onClick={onLogout} 
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 transition"
+            >
+            <FaSignOutAlt /> Logout
+            </button>
         </div>
-        <nav className="flex-1 p-4 space-y-2">
-          <button onClick={() => setActiveTab('inbox')} className={`w-full flex items-center gap-3 p-3 rounded transition ${activeTab === 'inbox' ? 'bg-jr-orange' : 'hover:bg-blue-800'}`}>
-            <FaEnvelope /> Inbox 
-            {messages.length > 0 && <span className="bg-red-500 text-xs px-2 py-1 rounded-full">{messages.length}</span>}
-          </button>
-          <button onClick={() => setActiveTab('services')} className={`w-full flex items-center gap-3 p-3 rounded transition ${activeTab === 'services' ? 'bg-jr-orange' : 'hover:bg-blue-800'}`}>
-            <FaHammer /> Services
-          </button>
-          <button onClick={() => setActiveTab('projects')} className={`w-full flex items-center gap-3 p-3 rounded transition ${activeTab === 'projects' ? 'bg-jr-orange' : 'hover:bg-blue-800'}`}>
-            <FaProjectDiagram /> Projects
-          </button>
-        </nav>
-        <button onClick={onLogout} className="p-4 bg-red-600 hover:bg-red-700 flex items-center justify-center gap-2">
-          <FaSignOutAlt /> Logout
-        </button>
-      </aside>
+      </div>
 
-      {/* MAIN CONTENT AREA */}
-      <main className="flex-1 p-10 overflow-y-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8 capitalize">{activeTab} Management</h1>
+      <div className="max-w-6xl mx-auto p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* LEFT: ADD SERVICE FORM */}
+        <div className="bg-white p-6 rounded-xl shadow-lg h-fit">
+          <h2 className="text-xl font-bold mb-6 text-gray-800 flex items-center gap-2">
+            <FaPlus className="text-orange-500" /> Add New Service
+          </h2>
+          
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-        {/* INBOX TAB */}
-        {activeTab === 'inbox' && (
-          <div className="space-y-4">
-            {messages.length === 0 ? (
-              <div className="text-gray-500">No new messages from users.</div>
-            ) : (
-              messages.map((msg, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-lg shadow-md border-l-4 border-jr-orange flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-lg">{msg.name}</h3>
-                    <p className="text-sm text-gray-500">{msg.email}</p>
-                    <p className="mt-2 text-gray-700 bg-gray-50 p-3 rounded">{msg.message}</p>
-                    <p className="text-xs text-gray-400 mt-2">{msg.date}</p>
-                  </div>
-                  <button onClick={() => handleDeleteMessage(idx)} className="text-red-500 hover:text-red-700"><FaTrash /></button>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-
-        {/* SERVICES / PROJECTS TABS (CRUD Simulation) */}
-        {['services', 'projects'].includes(activeTab) && (
-          <div>
-            <div className="flex justify-end mb-6">
-              <button onClick={() => handleAddItem(activeTab)} className="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 flex items-center gap-2">
-                <FaPlus /> Add New {activeTab.slice(0, -1)}
-              </button>
+          <form onSubmit={handleAddService} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Service Title</label>
+              <input
+                type="text"
+                placeholder="e.g., House Renovation"
+                value={newService.title}
+                onChange={(e) => setNewService({ ...newService, title: e.target.value })}
+                className="w-full p-3 border rounded focus:ring-2 focus:ring-orange-500 outline-none"
+                required
+              />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {content[activeTab].map((item) => (
-                <div key={item.id} className="bg-white p-6 rounded shadow flex justify-between items-center">
-                  <span className="font-bold text-lg">{item.title}</span>
-                  <div className="flex gap-2">
-                    <button className="text-blue-500 border border-blue-500 px-3 py-1 rounded hover:bg-blue-50">Edit</button>
-                    <button onClick={() => handleDeleteItem(activeTab, item.id)} className="text-white bg-red-500 px-3 py-1 rounded hover:bg-red-600">Delete</button>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Description</label>
+              <textarea
+                placeholder="Details about the service..."
+                value={newService.description}
+                onChange={(e) => setNewService({ ...newService, description: e.target.value })}
+                className="w-full p-3 border rounded focus:ring-2 focus:ring-orange-500 outline-none h-32"
+                required
+              />
+            </div>
+
+            <button
+              disabled={loading}
+              className={`w-full py-3 rounded-lg font-bold text-white transition ${loading ? "bg-gray-400" : "bg-blue-900 hover:bg-blue-800"}`}
+            >
+              {loading ? "Adding..." : "Add Service"}
+            </button>
+          </form>
+        </div>
+
+        {/* RIGHT: LIST OF SERVICES */}
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="text-xl font-bold text-gray-800">Existing Services</h2>
+          
+          {services.length === 0 ? (
+            <p className="text-gray-500 italic">No services found. Add one on the left!</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {services.map((service) => (
+                <div key={service.id} className="bg-white p-5 rounded-lg shadow border-l-4 border-orange-500 flex justify-between items-start">
+                  <div>
+                    <h3 className="font-bold text-lg text-gray-800">{service.title}</h3>
+                    <p className="text-gray-600 text-sm mt-1">{service.description}</p>
                   </div>
+                  <button 
+                    onClick={() => handleDelete(service.id)}
+                    className="text-red-500 hover:text-red-700 p-2"
+                    title="Delete Service"
+                  >
+                    <FaTrash />
+                  </button>
                 </div>
               ))}
             </div>
-          </div>
-        )}
-      </main>
+          )}
+        </div>
+
+      </div>
     </div>
   );
-}
+};
+
+export default AdminDashboard;

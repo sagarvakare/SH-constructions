@@ -1,6 +1,6 @@
-package com.jrconstructions.backend.repository;
+package com.SH construction.backend.repository;
 
-import com.jrconstructions.backend.entity.User;
+import com.SH construction.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

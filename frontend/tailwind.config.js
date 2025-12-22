@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // These are the EXACT colors from jrconstructionsandsolutions.com
+        // These are the EXACT colors from SH constructionandsolutions.com
         'jr-blue': '#0c2b64', 
         'jr-orange': '#f15a22',
         'jr-light': '#f8f9fa',

@@ -1,4 +1,4 @@
-package com.jrconstructions.backend.entity;
+package com.SH construction.backend.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
