@@ -19,7 +19,7 @@ const initialServices = [
 
 const initialProjects = [
   { id: 1, category: "Residential", title: "Pratham Heights", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=400" },
-  { id: 2, category: "Commercial", title: "Westside Complex", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=400" },
+  { id: 2, category: "Commercial", title: "Westside Complex", img: "https://jrconstructionsandsolutions.com/assets/casagrand.jpg" },
   { id: 3, category: "Residential", title: "Govt. School Wing", img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=400" },
 ];
 
