@@ -10,10 +10,10 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2 text-2xl font-bold mb-6">
             <FaHardHat className="text-jr-orange" />
-            <span>JR <span className="text-jr-orange">Constructions</span></span>
+            <span>S H <span className="text-jr-orange">Constructions</span></span>
           </div>
           <p className="text-gray-400 leading-relaxed">
-            Building legacies since 2014. We are committed to delivering excellence in every brick we lay.
+            Building legacies since 2024. We are committed to delivering excellence in every brick we lay.
           </p>
         </div>
 
@@ -23,7 +23,7 @@ export default function Footer() {
           <ul className="space-y-3 text-gray-400">
             {['Home', 'Services', 'Projects', 'Team', 'Contact'].map((item) => (
               <li key={item}>
-                <a href={`#${item.toLowerCase()}`} className="hover:text-jr-orange transition-colors flex items-center gap-2">
+                <a href={`#${item.toLowerCase()}`} className="hover:text-S H -orange transition-colors flex items-center gap-2">
                   <span className="text-jr-orange">›</span> {item}
                 </a>
               </li>
@@ -59,7 +59,7 @@ export default function Footer() {
 
       {/* Copyright Bar */}
       <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} JR Constructions & Solutions. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} S H Constructions & Solutions. All Rights Reserved.</p>
       </div>
     </footer>
   );

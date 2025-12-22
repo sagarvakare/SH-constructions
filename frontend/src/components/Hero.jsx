@@ -26,7 +26,7 @@ export default function Hero() {
             </span>
           </h1>
           <p className="mt-6 text-lg text-gray-600 leading-relaxed">
-            For over 10 years, <span className="font-bold text-orange-600">JR Constructions</span> has been at the forefront of construction excellence. We create legacies.
+            For over 10 years, <span className="font-bold text-orange-600">S H  Constructions</span> has been at the forefront of construction excellence. We create legacies.
           </p>
           
           <div className="mt-8 space-y-3">

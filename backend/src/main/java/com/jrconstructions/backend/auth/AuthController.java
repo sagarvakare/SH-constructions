@@ -11,18 +11,20 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder; // Import this!
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin; // 1. Import this
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*") // 2. Add this line to allow ALL origins
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService userDetailsService;
-    private final UserRepository userRepository; // Add this
-    private final PasswordEncoder passwordEncoder; // Add this
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil,
                           CustomUserDetailsService userDetailsService, UserRepository userRepository, 
@@ -34,7 +36,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // --- 1. REGISTER ENDPOINT (New!) ---
+    // --- 1. REGISTER ENDPOINT ---
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
@@ -53,7 +55,7 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully");
     }
 
-    // --- 2. LOGIN ENDPOINT (Existing) ---
+    // --- 2. LOGIN ENDPOINT ---
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
@@ -69,7 +71,7 @@ public class AuthController {
                     .findFirst()
                     .orElse("USER");
             
-            // Remove "ROLE_" prefix if present (Spring Security sometimes adds it)
+            // Remove "ROLE_" prefix if present
             if (role.startsWith("ROLE_")) {
                 role = role.substring(5);
             }

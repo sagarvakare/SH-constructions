@@ -10,8 +10,8 @@ export default function Contact() {
         <div className="bg-gray-900 text-white p-12">
            <h2 className="text-4xl font-bold mb-8">Get In <span className="text-orange-500">Touch</span></h2>
            <div className="space-y-6">
-              <div className="flex items-center gap-4"><FaPhone className="text-orange-500"/> <div><p className="font-bold">+91 9742955268</p></div></div>
-              <div className="flex items-center gap-4"><FaEnvelope className="text-orange-500"/> <div><p className="font-bold">jrconstructions@gmail.com</p></div></div>
+              <div className="flex items-center gap-4"><FaPhone className="text-orange-500"/> <div><p className="font-bold">+91 8073345519</p></div></div>
+              <div className="flex items-center gap-4"><FaEnvelope className="text-orange-500"/> <div><p className="font-bold">S H constructions@gmail.com</p></div></div>
               <div className="flex items-center gap-4"><FaMapMarkerAlt className="text-orange-500"/> <div><p className="font-bold">Rajaji Nagar, Bengaluru</p></div></div>
            </div>
         </div>
