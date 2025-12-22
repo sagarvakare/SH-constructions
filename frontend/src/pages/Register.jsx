@@ -1,31 +1,55 @@
 import { useState } from "react";
-import api from "../api"; // ✅ We import 'api', not 'axios'
+import api from "../api"; 
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+  // Default role is USER
   const [formData, setFormData] = useState({ username: "", password: "", role: "USER" });
-  const [loading, setLoading] = useState(false); // Added loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setLoading(true); // Disable button while loading
+    setLoading(true);
+
+    // Simple Client-Side Validation
+    if (formData.password.length < 3) {
+        alert("Password must be at least 3 characters long");
+        setLoading(false);
+        return;
+    }
 
     try {
-      // ✅ FIX: Use 'api.post' instead of 'axios.post'
-      // ✅ FIX: Remove the full URL (api.js handles it)
-      await api.post("/auth/register", formData);
+      console.log("Sending Data:", formData); // Check console to see what you are sending
       
-      alert(`Registration Successful! Please login.`);
+      const response = await api.post("/auth/register", formData);
+      
+      console.log("Registration Response:", response.data);
+      alert("Registration Successful! Please login.");
       navigate("/login");
 
     } catch (err) {
-      console.error("Registration Error:", err);
+      console.error("Registration Error Details:", err);
       
-      // ✅ BETTER ERROR HANDLING:
-      // This will show the REAL error from the backend (e.g., "Username taken")
-      // instead of just guessing.
-      const errorMessage = err.response?.data?.message || err.message || "Registration failed.";
+      // EXTRACT THE EXACT ERROR MESSAGE FROM BACKEND
+      let errorMessage = "Registration failed.";
+      
+      if (err.response) {
+          // Server responded with a status code (like 400)
+          if (err.response.data) {
+             // If backend sent a string message
+             if (typeof err.response.data === 'string') {
+                 errorMessage = err.response.data;
+             } 
+             // If backend sent a JSON object with a message field
+             else if (err.response.data.message) {
+                 errorMessage = err.response.data.message;
+             }
+          }
+      } else if (err.request) {
+          errorMessage = "Server not responding. Check your internet or backend status.";
+      }
+
       alert(`Error: ${errorMessage}`);
     } finally {
       setLoading(false);
@@ -34,29 +58,37 @@ function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 pt-20">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border-t-4 border-orange-500">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Create Account</h2>
+        
         <form onSubmit={handleRegister} className="space-y-4">
-          <input 
-            type="text" 
-            placeholder="Username" 
-            onChange={e => setFormData({...formData, username: e.target.value})} 
-            className="w-full p-3 border rounded" 
-            required 
-          />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            onChange={e => setFormData({...formData, password: e.target.value})} 
-            className="w-full p-3 border rounded" 
-            required 
-          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+            <input 
+                type="text" 
+                placeholder="Enter username" 
+                onChange={e => setFormData({...formData, username: e.target.value})} 
+                className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-orange-500 outline-none" 
+                required 
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input 
+                type="password" 
+                placeholder="Enter password" 
+                onChange={e => setFormData({...formData, password: e.target.value})} 
+                className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-orange-500 outline-none" 
+                required 
+            />
+          </div>
           
           <div>
-            <label className="block text-sm text-gray-600 mb-1">Select Role</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Select Role</label>
             <select 
               onChange={e => setFormData({...formData, role: e.target.value})} 
-              className="w-full p-3 border rounded bg-white"
+              className="w-full p-3 border border-gray-300 rounded bg-white focus:ring-2 focus:ring-orange-500 outline-none"
               value={formData.role}
             >
               <option value="USER">User (Standard)</option>
@@ -66,13 +98,14 @@ function Register() {
 
           <button 
             disabled={loading}
-            className={`w-full py-3 rounded font-bold text-white transition ${loading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-800'}`}
+            className={`w-full py-3 rounded-lg font-bold text-white transition transform active:scale-95 ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-900 hover:bg-blue-800'}`}
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Registering..." : "Register Now"}
           </button>
         </form>
-        <p className="mt-4 text-center text-sm">
-           Already have an account? <Link to="/login" className="text-orange-500 font-bold">Login</Link>
+
+        <p className="mt-6 text-center text-sm text-gray-600">
+           Already have an account? <Link to="/login" className="text-orange-600 font-bold hover:underline">Login here</Link>
         </p>
       </div>
     </div>

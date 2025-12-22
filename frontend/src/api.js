@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+// ⚠️ CRITICAL: YOU MUST REPLACE THE URL BELOW WITH YOUR RENDER BACKEND URL ⚠️
 const api = axios.create({
-    // PASTE YOUR RENDER URL HERE
+    // Go to Render Dashboard -> Backend -> Copy the URL at the top left
+    // It will look like: https://jr-constructions-clone.onrender.com
     baseURL: 'https://jr-constructions-clone.onrender.com', 
     headers: { 'Content-Type': 'application/json' }
 });
@@ -9,10 +11,14 @@ const api = axios.create({
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
-        if (token) config.headers['Authorization'] = `Bearer ${token}`;
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
         return config;
     },
-    (error) => Promise.reject(error)
+    (error) => {
+        return Promise.reject(error);
+    }
 );
 
 export default api;
