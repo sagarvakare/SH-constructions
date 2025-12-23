@@ -1,4 +1,4 @@
-package com.SH construction.backend.security;
+package com.shconstructions.backend.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

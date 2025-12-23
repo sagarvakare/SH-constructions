@@ -1,11 +1,12 @@
-package com.SH construction.backend.entity;
+package com.shconstructions.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDate;
 
 @Entity
 @Data
-public class Service {
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,5 +16,8 @@ public class Service {
     @Column(length = 1000)
     private String description;
     
-    private String iconUrl; // URL for an icon image
+    private String imageUrl;
+    private String clientName;
+    private String location;
+    private LocalDate completionDate;
 }

@@ -1,4 +1,4 @@
-package com.SH construction.backend.config; // ADJUST PACKAGE NAME IF NEEDED
+package com.shconstructions.backend.security; // ADJUST PACKAGE NAME IF NEEDED
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

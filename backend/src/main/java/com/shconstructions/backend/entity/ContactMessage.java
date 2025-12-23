@@ -1,4 +1,4 @@
-package com.SH construction.backend.entity;
+package com.shconstructions.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,7 +1,7 @@
-package com.SH construction.backend.controller;
+package com.shconstructions.backend.controller;
 
-import com.SH construction.backend.entity.ContactMessage;
-import com.SH construction.backend.repository.ContactRepository;
+import com.shconstructions.backend.entity.ContactMessage;
+import com.shconstructions.backend.repository.ContactRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

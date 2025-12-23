@@ -1,7 +1,7 @@
-package com.SH construction.backend.service;
+package com.shconstructions.backend.service;
 
-import com.SH construction.backend.entity.Project;
-import com.SH construction.backend.repository.ProjectRepository;
+import com.shconstructions.backend.entity.Project;
+import com.shconstructions.backend.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

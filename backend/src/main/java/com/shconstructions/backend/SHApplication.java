@@ -1,4 +1,4 @@
-package com.SH construction.backend;
+package com.shconstructions.backend;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -6,13 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication; // <--- Thi
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.SH construction.backend.entity.User;
-import com.SH construction.backend.repository.UserRepository;
+import com.shconstructions.backend.entity.User;
+import com.shconstructions.backend.repository.UserRepository;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication
-public class SH constructionApplication {
+public class SHApplication {
 
     // --- Load .env variables before the app starts ---
     static {
@@ -28,7 +28,7 @@ public class SH constructionApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(SH constructionApplication.class, args);
+        SpringApplication.run(SHApplication.class, args);
     }
 
     // Creates the Admin user if it doesn't exist

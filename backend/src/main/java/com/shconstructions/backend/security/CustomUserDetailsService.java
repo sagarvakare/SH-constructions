@@ -1,7 +1,7 @@
-package com.SH construction.backend.security;
+package com.shconstructions.backend.security;
 
-import com.SH construction.backend.entity.User;
-import com.SH construction.backend.repository.UserRepository;
+import com.shconstructions.backend.entity.User;
+import com.shconstructions.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

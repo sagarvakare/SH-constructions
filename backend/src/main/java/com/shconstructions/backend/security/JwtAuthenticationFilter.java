@@ -1,4 +1,4 @@
-package com.SH construction.backend.security;
+package com.shconstructions.backend.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

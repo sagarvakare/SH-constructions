@@ -8,10 +8,10 @@
 		<version>4.0.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.SH-construction</groupId>
+	<groupId>com.shconstruction</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SH-constructions</name>
+	<name>shconstructions</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

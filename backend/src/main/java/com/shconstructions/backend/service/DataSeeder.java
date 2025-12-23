@@ -1,7 +1,7 @@
-package com.SH construction.backend.service;
+package com.shconstructions.backend.service;
 
-import com.SH construction.backend.entity.Service;
-import com.SH construction.backend.repository.ServiceRepository;
+import com.shconstructions.backend.entity.Service;
+import com.shconstructions.backend.repository.ServiceRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;

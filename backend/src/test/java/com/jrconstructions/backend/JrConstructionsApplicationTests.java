@@ -1,10 +1,11 @@
-package com.SH construction.backend;
+package com.jrconstructions.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SH constructionApplicationTests {
+class SHApplicationTests {
+	
 
 	@Test
 	void contextLoads() {
