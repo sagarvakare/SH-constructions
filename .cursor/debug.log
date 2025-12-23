@@ -1,4 +1,0 @@
-{"sessionId":"debug-session","runId":"pre-fix","hypothesisId":"H1","location":"JrConstructionsApplication.main:19","message":"main entry","data":{"args":[]},"timestamp":1765448408447}
-{"sessionId":"debug-session","runId":"pre-fix","hypothesisId":"H2","location":"JrConstructionsApplication.main:24","message":"env check","data":{"userDir":"C:\\Users\\Sagar Vakare\\OneDrive\\Desktop\\jr-constructions-clone\\backend\\backend","javaVersion":"23.0.1","os":"Windows 11"},"timestamp":1765448408467}
-{"sessionId":"debug-session","runId":"pre-fix","hypothesisId":"H3","location":"JrConstructionsApplication.main:32","message":"wrapper presence","data":{"hasMvnw":true,"hasMvnwCmd":true},"timestamp":1765448408472}
-{"sessionId":"debug-session","runId":"pre-fix","hypothesisId":"H4","location":"JrConstructionsApplication.main:39","message":"spring run returned","data":{},"timestamp":1765448411568}
